@@ -2,6 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:mad_sport_app/app/http/call_api.dart';
 import 'package:mad_sport_app/app/pages/home/repository/home_repository.dart';
 import '../../../utility/constants.dart';
 import '../../../utility/global.dart';
@@ -27,7 +28,7 @@ class HomeController extends GetxController with GetSingleTickerProviderStateMix
   late Animation<double> animation2;
   late CurvedAnimation curve;
   double hightBottmBar = IO.Platform.isIOS? 80:55;
-
+  var isLoading = false.obs;
   final iconList = <String>[
     "ic_home.svg",
     "ic_date.svg",
@@ -102,7 +103,9 @@ class HomeController extends GetxController with GetSingleTickerProviderStateMix
   }
 
 void getSessions(){
+    setLoading(isLoading);
     HomeRepository.getSessions().then((value) {
+      setLoading(isLoading);
       if(value!=null){
         mySessions(value);
       }

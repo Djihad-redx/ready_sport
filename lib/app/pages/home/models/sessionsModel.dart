@@ -7,20 +7,20 @@ String sessionsModelToJson(SessionsModel data) => json.encode(data.toJson());
 class SessionsModel {
   SessionsModel({
     this.success,
-    this.message,
+    this.data,
   });
 
   bool? success;
-  List<SessionData>? message;
+  List<SessionData>? data;
 
   factory SessionsModel.fromJson(Map<String, dynamic> json) => SessionsModel(
     success: json["success"],
-    message: List<SessionData>.from(json["data"].map((x) => SessionData.fromJson(x))),
+    data: List<SessionData>.from(json["data"].map((x) => SessionData.fromJson(x))),
   );
 
   Map<String, dynamic> toJson() => {
     "success": success,
-    "data": List<dynamic>.from(message!.map((x) => x.toJson())),
+    "data": List<dynamic>.from(data!.map((x) => x.toJson())),
   };
 }
 
@@ -59,12 +59,12 @@ class SessionData {
   Center? center;
   int? startDate;
   int? duration;
-  String? endDate;
+  int? endDate;
   String? status;
   DateTime? statusDate;
   Guest? organizer;
-  String? availableSlots;
-  String? pricePerSlot;
+  int? availableSlots;
+  double? pricePerSlot;
   String? currency;
   String? description;
   String? format;

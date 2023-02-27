@@ -1,4 +1,4 @@
-#Sat May 28 22:52:27 GST 2022
-base.0=/Users/macbookpro/AndroidStudioProjects/mad_sport_app/build/app/intermediates/dex/debug/mergeDexDebug/classes.dex
+#Mon Feb 27 12:21:18 GST 2023
+base.0=C\:\\ready_sport\\build\\app\\intermediates\\dex\\debug\\mergeDexDebug\\classes.dex
 renamed.0=classes.dex
 path.0=classes.dex

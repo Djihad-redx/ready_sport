@@ -37,8 +37,7 @@ class SignUpView extends GetView<SignUpController> {
               height: getHight(context),
               padding: const EdgeInsets.symmetric(horizontal: 20),
               color: Colors.white,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+              child: ListView(
                 children: [
                   Container(
                       padding: const EdgeInsets.only(top: 50),
