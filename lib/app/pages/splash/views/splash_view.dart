@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mad_sport_app/app/pages/splash/controler/splash_controller.dart';
 import '../../../utility/constants.dart';
 
-class SplashView extends GetView  {
+class SplashView extends GetView<SplashController>  {
   const SplashView({Key? key}) : super(key: key);
 
   @override

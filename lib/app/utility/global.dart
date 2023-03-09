@@ -1,20 +1,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
+import 'package:mad_sport_app/app/map/model/centers.dart';
+import 'package:mad_sport_app/app/pages/authentication/model/user_model.dart';
 
+var myUser  = UserModel().obs;
+var centers = CentersModel().obs;
 
-
-toastMe(String content,Color color){
-  Fluttertoast.showToast(
-      msg: content,
-      toastLength: Toast.LENGTH_SHORT,
-      gravity: ToastGravity.BOTTOM,
-      timeInSecForIosWeb: 1,
-      backgroundColor: color,
-      textColor: Colors.white,
-      fontSize: 16.0
-  );
-}
 
  BorderRadius getCircularRadius(double value){
   return BorderRadius.all(Radius.circular(value));

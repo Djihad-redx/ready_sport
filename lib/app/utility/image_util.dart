@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
 class ImageUtils {
   ImageUtils._();
@@ -70,19 +69,19 @@ class ImageUtils {
             width: width, height: height, fit: BoxFit.fill),
       );
 
-  static Widget failedImage() {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: const [
-        Icon(FeatherIcons.alertCircle),
-        SizedBox(
-          height: 5,
-        ),
-        Text(
-          'Could not load image',
-        )
-      ],
-    );
-  }
+  // static Widget failedImage() {
+  //   return Column(
+  //     mainAxisAlignment: MainAxisAlignment.center,
+  //     crossAxisAlignment: CrossAxisAlignment.center,
+  //     children: const [
+  //       Icon(FeatherIcons.alertCircle),
+  //       SizedBox(
+  //         height: 5,
+  //       ),
+  //       Text(
+  //         'Could not load image',
+  //       )
+  //     ],
+  //   );
+  // }
 }

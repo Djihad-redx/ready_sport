@@ -1,26 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:mad_sport_app/app/pages/authentication/controller/login_controller.dart';
 import 'package:mad_sport_app/app/pages/authentication/views/forgot_password.dart';
 import 'package:mad_sport_app/app/pages/authentication/views/sign_up_view.dart';
 import 'package:mad_sport_app/app/pages/home/bindings/home_binding.dart';
 import 'package:mad_sport_app/app/pages/home/views/home_view.dart';
+import '../../../routes/app_pages.dart';
 import '../../../utility/constants.dart';
 import '../../../utility/global.dart';
+import '../../../widgets/Loading.dart';
 import '../../../widgets/input_field.dart';
 import '../../../widgets/my_button.dart';
 import '../../../widgets/password_field.dart';
 
 
-class LoginView extends GetView {
+class LoginView extends GetView<LoginController> {
   const LoginView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: Stack(
-          children: [
-            Container(
+    return Stack(
+      children: [
+        Scaffold(
+            body: Container(
               height: getHight(context),
               padding: const EdgeInsets.symmetric(horizontal: 20),
                  color: Colors.white,
@@ -42,15 +45,16 @@ class LoginView extends GetView {
                             SizedBox(
                               height: getHight(context) * .04,
                             ),
-                            const InputField(
+                             InputField(
+                              controller: controller.email,
                                 icon: "ic_person",
                                 hint: "Email or ID",
                                 divider: true),
                             SizedBox(
                               height: getHight(context) * .02,
                             ),
-                            const PasswordField(
-                                icon: "ic_password", hint: "Password") ,
+                             PasswordField(
+                                icon: "ic_password", hint: "Password",controller: controller.password,) ,
 
                             InkWell(
                               onTap: () {
@@ -70,7 +74,7 @@ class LoginView extends GetView {
                             ),
                             InkWell(
                               onTap: () {
-                                Get.to(const HomePage(),binding: HomeBinding());
+                                controller.login();
                               },
                               child: const MyButton(
                                 width: 200,
@@ -87,7 +91,7 @@ class LoginView extends GetView {
                             ),
                             InkWell(
                               onTap: () {
-                                Get.to(const SignUpView());
+                                Get.toNamed(Paths.SIGNUP_PAGE);
                               },
                               child: const Padding(
                                 padding: EdgeInsets.all(8.0),
@@ -102,9 +106,9 @@ class LoginView extends GetView {
                       ),
                     ],
                   ),
-                ),
-           // _loginController.isLoading.value? MyLoading():Container()
-          ],
-        ));
+                )),
+        Obx(() => controller.isLoading.value? MyLoading():Container())
+      ],
+    );
   }
 }

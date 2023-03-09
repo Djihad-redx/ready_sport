@@ -10,4 +10,6 @@ abstract class Routes {
   static const SPLASH = "/splash";
   static const HOME_PAGE = "/homePage";
   static const LOGIN_PAGE = "/loginPage";
+  static const SIGNUP_PAGE = "/registerPage";
+  static const FORGET_PASSWORD_PAGE = "/forgetPassword";
 }

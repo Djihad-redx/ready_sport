@@ -1,10 +1,17 @@
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:mad_sport_app/app/map/view/map_centers.dart';
 import 'package:mad_sport_app/app/pages/home/controllers/home_controller.dart';
 import 'package:mad_sport_app/app/pages/main_page/view/main_page_view.dart';
+import 'package:mad_sport_app/app/routes/app_pages.dart';
+import 'package:mad_sport_app/app/utility/dialogs.dart';
+import 'package:mad_sport_app/app/utility/global.dart';
+import 'package:mad_sport_app/app/utility/storage_utility.dart';
+import 'package:mad_sport_app/app/widgets/Loading.dart';
 
 class HomePage extends GetView {
   const HomePage({Key? key}) : super(key: key);
@@ -19,7 +26,7 @@ class HomePage extends GetView {
           key:controller.scaffoldKey,
           appBar: AppBar(
             backgroundColor: Colors.orange,
-            title:  const Text('The rock',style: TextStyle(
+            title: Text(myUser.value.message==null?'':myUser.value.message!.username??'Name not found',style: const TextStyle(
               color: Colors.black,
               fontSize: 16,
               fontWeight: FontWeight.bold
@@ -27,19 +34,25 @@ class HomePage extends GetView {
             centerTitle: false,
             leading: InkWell(
                 onTap: (){
+                  StorageUtility.removeKey('token');
+                  Get.offAllNamed(Paths.LOGIN_PAGE);
+                  MyDialogs.toastMe('Signed out !!');
                 },
                 child: Container(
                   margin: const EdgeInsets.only(left: 20),
-                  decoration: const BoxDecoration(
+                  decoration:  BoxDecoration(
                       shape: BoxShape.circle,
+                      color: Colors.grey.shade200,
                       image: DecorationImage(
-                          image: AssetImage('assets/images/person.jpeg'),
+                          image: CachedNetworkImageProvider(myUser.value.message==null?'':myUser.value.message!.profilePicture.toString().contains('defaultAvatar')?'https://as2.ftcdn.net/v2/jpg/02/15/84/43/1000_F_215844325_ttX9YiIIyeaR7Ne6EaLLjMAmy4GvPC69.jpg':myUser.value.message!.profilePicture??''),
                           fit: BoxFit.cover
                       )
                   ),
                 ),
             ),
-            actions: [IconButton(onPressed: (){}, icon: const Icon(Icons.notifications_none_outlined,size: 30,color: Colors.black,))],
+            actions: [IconButton(onPressed: (){
+              Get.to(MapCentersView());
+            }, icon: const Icon(Icons.map_outlined,size: 30,color: Colors.black,))],
 
           ),
           body: WillPopScope(

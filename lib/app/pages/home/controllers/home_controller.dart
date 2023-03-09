@@ -2,16 +2,23 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:mad_sport_app/app/http/call_api.dart';
+import 'package:mad_sport_app/app/map/model/centers.dart';
+import 'package:mad_sport_app/app/map/repository/center_repo.dart';
+import 'package:mad_sport_app/app/pages/home/repository/home_repository.dart';
 import '../../../utility/constants.dart';
 import '../../../utility/global.dart';
 import '../../../utility/hex_color.dart';
 import 'dart:io' as IO;
+
+import '../models/sessionsModel.dart';
 
 
 
 class HomeController extends GetxController with GetSingleTickerProviderStateMixin{
   late PageController pageController;
   var currentIndex = 0.obs;
+  var mySessions = SessionsModel().obs;
   GlobalKey bottomNavigationKey = GlobalKey();
   var scaffoldKey = GlobalKey<ScaffoldState>();
   final autoSizeGroup = AutoSizeGroup();
@@ -23,6 +30,7 @@ class HomeController extends GetxController with GetSingleTickerProviderStateMix
   late Animation<double> animation2;
   late CurvedAnimation curve;
   double hightBottmBar = IO.Platform.isIOS? 80:55;
+  var isLoading = false.obs;
 
   final iconList = <String>[
     "ic_home.svg",
@@ -30,12 +38,12 @@ class HomeController extends GetxController with GetSingleTickerProviderStateMix
     "ic_groupe.svg",
     "ic_chat.svg",
   ];
-
   final List<String> iconTitles = ["home","My events","Team","Chat"];
 
   @override
   void onInit() {
     super.onInit();
+    getSessions();
     pageController = PageController();
     final systemTheme = SystemUiOverlayStyle.light.copyWith(
       systemNavigationBarColor: HexColor('#373A36'),
@@ -66,6 +74,8 @@ class HomeController extends GetxController with GetSingleTickerProviderStateMix
       const Duration(milliseconds: 1200),
           () => animationController.forward(),
     );
+    getCenters();
+
   }
 
   @override
@@ -91,13 +101,27 @@ class HomeController extends GetxController with GetSingleTickerProviderStateMix
     DateTime now = DateTime.now();
     if (now.difference(currentBackPressTime) > const Duration(seconds: 2)) {
       currentBackPressTime = now;
-      toastMe("Click again to close the application",Colors.black);
       return Future.value(false);
     }
     return Future.value(true);
   }
 
+  void getSessions(){
+    setLoading(isLoading);
+    HomeRepository.getSessions().then((value) {
+      setLoading(isLoading);
+      if(value!=null){
+        mySessions(value);
+      }
+    });
+}
 
-
+  void getCenters(){
+    CenterRepository.getCenters().then((value){
+      if(value != null){
+        centers(value);
+      }
+    });
+  }
 
 }
